@@ -9,7 +9,7 @@ export default function singleTestRunner(test: string) {
 		const terminal = getTerminal();
 
 		terminal.sendText(
-			`cd ${moduleBaseDir} && npm test ${activeFilePath} -- -m="${test}"`
+			`cd ${moduleBaseDir} && npm run int-test -- ${activeFilePath} -m="${test}"`
 		);
 	} catch (e: any) {
 		window.showErrorMessage(e.message);

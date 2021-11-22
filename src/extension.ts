@@ -5,6 +5,7 @@ import allTestsInActiveFileRunner from './runners/AllTestsInActiveFileRunner';
 import singleTestRunner from './runners/SingleTestRunner';
 import { Command, EXTENSION_NAME } from './constants';
 import singleTestAtCursorRunner from './runners/SingleTestAtCursorRunner';
+import singleTestAtCursorDebugRunner from './runners/SingleTestAtCursorDebugRunner';
 
 export function activate(context: vscode.ExtensionContext) {
 	const runAllTestsInActiveFileCommand = vscode.commands.registerCommand(
@@ -28,6 +29,13 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
+	const debugSingleTestAtCursor = vscode.commands.registerCommand(
+		`${EXTENSION_NAME}.${Command.DEBUG_SINGLE_TEST_AT_CURSOR}`,
+		async () => {
+			singleTestAtCursorDebugRunner();
+		}
+	);
+
 	const debugSingleTest = vscode.commands.registerCommand(
 		`${EXTENSION_NAME}.${Command.DEBUG_SINGLE_TEST}`,
 		async (test) => {
@@ -38,6 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(runAllTestsInActiveFileCommand);
 	context.subscriptions.push(runSingleTestCommand);
 	context.subscriptions.push(runSingleTestAtCursor);
+	context.subscriptions.push(debugSingleTestAtCursor);
 	context.subscriptions.push(debugSingleTest);
 
 	vscode.languages.registerCodeLensProvider(

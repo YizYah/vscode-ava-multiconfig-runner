@@ -1,8 +1,8 @@
 import { Position, window } from 'vscode';
 import { TEST_FIND_REGEX } from '../constants';
-import singleTestRunner from './SingleTestRunner';
+import singleTestDebugRunner from './SingleTestDebugRunner';
 
-export default function singleTestAtCursorRunner() {
+export default function singleTestAtCursorDebugRunner() {
 	const activeEditor = window.activeTextEditor;
 	const selectionStartLine = activeEditor!.selection.start.line;
 	const { document } = activeEditor!;
@@ -24,7 +24,7 @@ export default function singleTestAtCursorRunner() {
 
 		if (range) {
 			if (matchedLine && line.lineNumber > selectionStartLine && matchedTest) {
-				singleTestRunner(matchedTest);
+				singleTestDebugRunner(matchedTest);
 				return;
 			}
 
@@ -34,7 +34,7 @@ export default function singleTestAtCursorRunner() {
 	}
 
 	if (matchedTest) {
-		singleTestRunner(matchedTest);
+		singleTestDebugRunner(matchedTest);
 		return;
 	}
 

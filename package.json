@@ -3,7 +3,7 @@
   "displayName": "ava-multi-config-runner",
   "description": "a vsc extension for running or debugging tests with multiple configurations",
   "version": "1.0.0",
-  "repository": "",
+  "repository": "https://github.com/YizYah/vscode-ava-multiconfig-runner",
   "engines": {
     "vscode": "^1.50.0"
   },
@@ -12,46 +12,26 @@
   ],
   "publisher": "YizYak",
   "activationEvents": [
-    "*"
+    "onLanguage:typescript",
+    "onLanguage:javascript"
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "ava-test-runner.RUN_ALL_TESTS_IN_ACTIVE_FILE",
-        "title": "AVA: Run all tests in active file"
-      }
-    ],
     "keybindings": [
       {
-        "command": "ava-test-runner.RUN_SINGLE_INT_TEST_AT_CURSOR",
+        "command": "ava-launcher.DEBUG_SINGLE_INT_TEST_AT_CURSOR",
         "key": "ctrl+t ctrl+d",
         "mac": "cmd+t cmd+d",
         "when": "editorTextFocus"
       }
     ],
     "configuration": {
-      "title": "AVA",
+      "title": "Launch",
       "properties": {
-        "ava.directoryReplaceFrom": {
+        "launch.NPM_TOKEN": {
           "type": "string",
           "default": "",
-          "markdownDescription": "Test file path replace source."
-        },
-        "ava.directoryReplaceTo": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "Test file path replace target."
-        },
-        "ava.extensionReplaceFrom": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "Test file extension replace source."
-        },
-        "ava.extensionReplaceTo": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "Test file extension replace target."
+          "markdownDescription": "Token for running npm."
         }
       }
     }

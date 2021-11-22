@@ -1,4 +1,4 @@
-import { debug, window } from 'vscode';
+import { debug, window, workspace } from 'vscode';
 import { getActiveTestFilePath, getModuleBaseDir } from '../helpers/PathsHelpers';
 
 export default function singleTestDebugRunner(test: string) {
@@ -6,22 +6,34 @@ export default function singleTestDebugRunner(test: string) {
 		const activeFilePath = getActiveTestFilePath();
 		const moduleBaseDir = getModuleBaseDir();
 
-		debug.startDebugging(undefined, {
+		const launchConfiguration = workspace.getConfiguration('launch');
+		const NPM_TOKEN = launchConfiguration.get('NPM_TOKEN');
+
+
+		console.log(`workspace.name = ${workspace.name}/.env`);
+
+		const config = {
 			type: 'node',
 			request: 'launch',
 			name: 'Debug AVA test',
+			"envFile": `${workspace.rootPath}/.env`,
+			// env: {
+			// 	NPM_TOKEN
+			// },
 			cwd: moduleBaseDir,
 			runtimeExecutable: 'npm',
 			runtimeArgs: [
-				'test',
+				"run",
+				"int-test",
+				"--",
 				activeFilePath,
-				'--',
 				`-m='${test}'`
 			],
 			outputCapture: 'std',
 			skipFiles: ['<node_internals>/**/*.js']
-		});
-	} catch (e) {
+		}
+		debug.startDebugging(undefined, config);
+	} catch (e: any) {
 		window.showErrorMessage(e.message);
 	}
 }
