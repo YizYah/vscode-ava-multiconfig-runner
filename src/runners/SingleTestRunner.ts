@@ -8,8 +8,17 @@ export default function singleTestRunner(test: string) {
 		const moduleBaseDir = getModuleBaseDir();
 		const terminal = getTerminal();
 
+		// const extensionTest = 'test.ts'
+		const extensionInt = 'int.ts'
+
+		let scriptName = 'test'
+		if (activeFilePath.endsWith(extensionInt)) {
+			scriptName = 'int-test'
+		}
+		
+
 		terminal.sendText(
-			`cd ${moduleBaseDir} && npm run int-test -- ${activeFilePath} -m="${test}"`
+			`cd ${moduleBaseDir} && npm run ${scriptName} -- ${activeFilePath} -m="${test}"`
 		);
 	} catch (e: any) {
 		window.showErrorMessage(e.message);

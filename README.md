@@ -1,8 +1,10 @@
 # ava-multi-config-runner
 
-VSC extension for debugging and running single AVA (<https://github.com/avajs/ava>) tests based on multiple configurations
+VSC extension for debugging and running single AVA (<https://github.com/avajs/ava>) tests based on multiple configurations.
 
 ## Why
+
+The combination of a test runner and a debugger is phenomenal.  Unfortunately, many people find that with TS in particular it's hard to get VS Code and AVA to cooperate.  I want something with a zero learning curve--just click to launch from within your own code!
 
 This is based on the phenomenal VSC extension [ava-test-runner](https://github.com/jacekczapiewski/vscode-ava-test-runner) created by jacekczapiewski.  
 
@@ -12,27 +14,15 @@ But I have some very specific goals that require more configuration.  If you use
 
 ## Features
 
-- Running all tests in the active editor
-- Running single test using shortcut (test is automatically found using the cursor position)
-- Running a single test using CodeLenses
-- Debugging single test using CodeLenses
+It looks at the extension on a file. If it's `test.ts`, then it runs the npm script `test`.  If it's `int.ts` then it runs the `int-test` script.  The plan is to add a configuration that lets you provide your own combination of scripts and debuggers.
+
+It also includes your .env file as an environment for testing.  That's particularly relevant in you've got an `.npmrc` file with an environmental variable.
+
+You can:
+
+- click on the CodeLenses `Run` to run current test
+- click on the CodeLenses `Debug` to launch the debugger
 
 ## Configuration
 
-- `ava.directoryReplaceFrom`
-- `ava.directoryReplaceTo`
-- `ava.extensionReplaceFrom`
-- `ava.extensionReplaceTo`
-
-You may wonder why do we even need these properties. By default, they can be empty. It was added mainly to handle the case when tests are written using `TypeScript` without `ts-node`. The solution is to create a pretest task that compiles tests before running them. In such a case, those tests can be run using eg.
-
-```typescript
-{
-    "ava.directoryReplaceFrom": "/tests",
-    "ava.directoryReplaceTo": "/dist-tests",
-    "ava.extensionReplaceFrom": ".ts",
-    "ava.extensionReplaceTo": ".js"
-}
-```
-
-Let's say that the path of the original test file is as follows: `/sth/tests/RandomTests.ts`. This file is compiled to `/sth/dist-tests/RandomTests.js`. Using those settings replaces the original path during tests run.
+To be added.

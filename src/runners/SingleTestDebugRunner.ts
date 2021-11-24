@@ -9,8 +9,13 @@ export default function singleTestDebugRunner(test: string) {
 		const launchConfiguration = workspace.getConfiguration('launch');
 		const NPM_TOKEN = launchConfiguration.get('NPM_TOKEN');
 
+		// const extensionTest = 'test.ts'
+		const extensionInt = 'int.ts'
 
-		console.log(`workspace.name = ${workspace.name}/.env`);
+		let scriptName = 'test'
+		if (activeFilePath.endsWith(extensionInt)) {
+			scriptName = 'int-test'
+		}
 
 		const config = {
 			type: 'node',
@@ -24,7 +29,7 @@ export default function singleTestDebugRunner(test: string) {
 			runtimeExecutable: 'npm',
 			runtimeArgs: [
 				"run",
-				"int-test",
+				scriptName,
 				"--",
 				activeFilePath,
 				`-m='${test}'`
@@ -32,6 +37,7 @@ export default function singleTestDebugRunner(test: string) {
 			outputCapture: 'std',
 			skipFiles: ['<node_internals>/**/*.js']
 		}
+
 		debug.startDebugging(undefined, config);
 	} catch (e: any) {
 		window.showErrorMessage(e.message);
